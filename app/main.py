@@ -5,7 +5,7 @@ import traceback
 from contextlib import asynccontextmanager
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, Request, Depends
-from fastapi.responses import Response, FileResponse
+from fastapi.responses import Response, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import redis.asyncio as aioredis
@@ -157,7 +157,7 @@ class ResearchRequest(BaseModel):
 
 @app.get("/")
 async def frontend():
-    return FileResponse("/app/index.html")
+    return RedirectResponse(url="/docs")
 
 
 @app.get("/health")
