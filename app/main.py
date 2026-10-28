@@ -9,6 +9,12 @@ from fastapi.responses import Response, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import redis.asyncio as aioredis
+from fastapi.responses import FileResponse
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+FRONTEND_FILE = BASE_DIR / "index.html"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -155,9 +161,10 @@ class ResearchRequest(BaseModel):
     output_format: str = "text"
 
 
+
 @app.get("/")
 async def frontend():
-    return RedirectResponse(url="/docs")
+    return FileResponse(FRONTEND_FILE)
 
 
 @app.get("/health")
